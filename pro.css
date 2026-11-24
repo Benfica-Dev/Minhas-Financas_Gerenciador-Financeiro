@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.pro-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 450px;
+    width: 100%;
+}
+
+.btn-voltar {
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.pro-header {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.pro-header h1 {
+    color: #2e7d32;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.pro-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+.beneficios-lista {
+    margin: 25px 0;
+}
+
+.beneficio-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.beneficio-item span {
+    font-size: 24px;
+    background: #e8f5e9;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.beneficio-item h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.beneficio-item p {
+    margin: 3px 0 0 0;
+    font-size: 13px;
+    color: #666;
+}
+
+.card-preco {
+    background: #e8f5e9;
+    border: 2px solid #81c784;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.preco-valor {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.preco-valor small {
+    font-size: 14px;
+    color: #555;
+}
+
+.card-preco p {
+    font-size: 12px;
+    color: #555;
+    margin: 8px 0 15px 0;
+}
+
+.btn-assinar {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.btn-assinar:hover {
+    background-color: #1b5e20;
+}

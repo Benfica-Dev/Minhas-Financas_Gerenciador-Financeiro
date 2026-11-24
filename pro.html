@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página: Quero ser Pro</title>
+    <link rel="stylesheet" href="pro.css">
+</head>
+<body>
+    
+    <div class="pro-container">
+        <a href="index.html" class="btn-voltar">Voltar</a>
+
+        <div class="pro-header">
+            <h1>Desbloqueie o modo pro agora!</h1>
+            <p>Tenha controle total dos seus gastos com relatórios avançados e planilhas exclusivas!</p>
+        </div>
+
+        <div class="beneficios-lista">
+            <div class="beneficios-item">
+                <div>
+                    <h3>Relatórios para impressão</h3>
+                    <p>Gere resumos mensais limpos e organizados para imprimir ou salvar.</p>
+                </div>
+            </div>
+
+            <div class="beneficios-item">
+                <div>
+                    <h3>Planilhas personalizadas</h3>
+                    <p>Sugestões avançadas de controle criadas em parceria com especialistas.</p>
+                </div>
+            </div>
+
+            <div class="beneficios-item">
+                <div>
+                    <h3>Suporte prioritário</h3>
+                    <p>Ajuda direta e atualizações contínuas sem anúncios.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-preco">
+        <span class="preco-valor">R$10,00 <small>/mês</small></span>
+        <p>Cancele quando quiser. Sem amarras.</p>
+        <button id="btn-assinar" class="btn-assinar">Quero ser pro Agora</button>
+    </div>
+
+    <!-- Script para gerenciar a simulação da assinatura via Supabase -->
+    <script type="module">
+        import { supabase } from './supabase.js';
+
+        const btnAssinar = document.getElementById('btn-assinar');
+        
+        if (btnAssinar) {
+            btnAssinar.addEventListener('click', async () => {
+                // Pega o usuário logado atualmente
+                const { data: { user } } = await supabase.auth.getUser();
+
+                if (!user) {
+                    alert("Você precisa fazer login no app principal antes de assinar!");
+                    window.location.href = "index.html";
+                    return;
+                }
+
+                // Simula a ativação alterando o campo no Supabase
+                // (Certifique-se de ter uma tabela 'perfis' com as colunas 'id' e 'is_pro')
+                const { error } = await supabase
+                    .from('perfis')
+                    .upsert({ id: user.id, is_pro: true });
+
+                if (error) {
+                    console.error("Erro ao ativar o plano Pro:", error.message);
+                    alert("Erro ao ativar o plano Pro. Verifique o console.");
+                } else {
+                    alert("Parabéns! Assinatura Pro ativada com sucesso!");
+                    window.location.href = "index.html"; // Retorna para o app principal
+                }
+            });
+        }
+    </script>
+</body>
+</html>

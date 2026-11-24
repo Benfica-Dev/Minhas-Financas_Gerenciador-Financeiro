@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário Financeiro</title>
+    <link rel="stylesheet" href="calendario.css">
+</head>
+<body>
+
+    <a href="index.html" class="btn-pagina">Voltar para o Resumo</a>
+
+    <main class="agenda">
+
+        <!-- CABEÇALHO -->
+        <header class="agenda-cabecalho">
+            <div class="navegacao">
+                <button id="anterior"> ← </button>
+                <button id="hoje">Hoje</button>
+                <button id="proximo"> → </button>
+            </div>
+
+            <h1 id="mesAno"></h1>
+
+            <button id="novoEvento" class="botao-evento"> + Novo Lembrete </button>
+        </header>
+
+        <!-- CALENDÁRIO -->
+        <section class="calendario">
+            <div class="dias-semana">
+                <span>Dom</span>
+                <span>Seg</span>
+                <span>Ter</span>
+                <span>Qua</span>
+                <span>Qui</span>
+                <span>Sex</span>
+                <span>Sáb</span>
+            </div>
+
+            <div id="dias" class="dias"></div>
+        </section>
+    </main>
+
+    <!-- JANELA DE LANÇAMENTO / EVENTO -->
+    <div id="modalEvento" class="modal">
+        <div class="modal-conteudo">
+
+            <h2 id="tituloModal">Novo Lembrete Financeiro</h2>
+            
+            <label for="tituloEvento">Título (Ex: Conta de Luz, Salário)</label>
+            <input type="text" id="tituloEvento" placeholder="Nome do pagamento ou recebimento">
+
+            <label for="dataEvento">Data do Vencimento / Pagamento</label>
+            <input type="date" id="dataEvento">
+
+            <!-- Tipo de Lembrete Financeiro -->
+            <label for="tipoFinanceiro">Tipo de Lançamento</label>
+            <select id="tipoFinanceiro">
+                <option value="normal">Lembrete Comum</option>
+                <option value="pagar">Conta a Pagar (Saída)</option>
+                <option value="receber">Dia de Receber / Salário (Entrada)</option>
+            </select>
+
+            <label for="valorEvento">Valor (Opcional)</label>
+            <input type="number" id="valorEvento" placeholder="0,00" step="0.01">
+
+            <label for="descricaoEvento">Observações</label>
+            <textarea id="descricaoEvento" placeholder="Detalhes adicionais..."></textarea>
+
+            <div class="modal-botoes">
+                <button id="cancelarEvento">Cancelar</button>
+                <button id="salvarEvento" class="botao-salvar">Salvar</button>
+                <button id="excluirEvento" class="botao-excluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="calendario.js"></script>
+
+</body>
+</html>

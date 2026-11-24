@@ -1,0 +1,638 @@
+* {
+   box-sizing: border-box;
+}
+
+body {
+   margin: 0;
+   font-family: Arial, sans-serif;
+   background: #f5f5f5;
+   color: #222;
+}
+
+/* =========================
+  AGENDA
+========================= */
+.agenda {
+   width: 95%;
+   max-width: 1100px;
+   margin: 30px auto;
+   background: white;
+   border: 1px solid #ddd;
+   border-radius: 12px;
+   overflow: hidden;
+}
+
+/* =========================
+  CABEÇALHO
+========================= */
+.agenda-cabecalho {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 16px 20px;
+   border-bottom: 1px solid #ddd;
+}
+
+.navegacao {
+   display: flex;
+   gap: 8px;
+}
+
+.btn-pagina {
+    display: inline-block;
+    margin: 10px 0 20px 0; /* Margem em cima e embaixo para desgrudar das bordas */
+    background-color: #3498db;
+    color: white;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.btn-pagina:hover {
+    background-color: #1f5375;
+    transform: translateY(-1px);
+}
+
+button {
+   border: 1px solid #ccc;
+   background: white;
+   border-radius: 6px;
+   padding: 9px 14px;
+   cursor: pointer;
+   font-size: 14px;
+}
+
+button:hover {
+   background: #f0f0f0;
+}
+
+#mesAno {
+   margin: 0;
+   font-size: 22px;
+   text-transform: capitalize;
+}
+
+.botao-evento {
+   background: #4285f4;
+   color: white;
+   border: none;
+   border-radius: 20px;
+   padding: 10px 18px;
+}
+
+.botao-evento:hover {
+   background: #3367d6;
+}
+
+/* =========================
+  CALENDÁRIO
+========================= */
+.dias-semana,
+.dias {
+   display: grid;
+   grid-template-columns:
+       repeat(7, 1fr);
+}
+
+.dias-semana span {
+   padding: 12px;
+   text-align: center;
+   font-weight: bold;
+   color: #666;
+   border-bottom: 1px solid #ddd;
+}
+
+.dia {
+   min-height: 120px;
+   padding: 8px;
+   border: none;
+   border-right: 1px solid #ddd;
+   border-bottom: 1px solid #ddd;
+   border-radius: 0;
+   background: white;
+   text-align: left;
+   vertical-align: top;
+}
+
+.dia:hover {
+   background: #f8fbff;
+}
+
+.dia-numero {
+   display: inline-flex;
+   width: 28px;
+   height: 28px;
+   align-items: center;
+   justify-content: center;
+   font-size: 14px;
+   margin-bottom: 5px;
+}
+
+/* =========================
+  DIA ATUAL
+========================= */
+.dia.hoje .dia-numero {
+   background: #4285f4;
+   color: white;
+   border-radius: 50%;
+}
+
+/* =========================
+  EVENTOS
+========================= */
+.evento {
+   display: block;
+   width: 100%;
+   margin-top: 3px;
+   padding: 4px 6px;
+   background: #dbeafe;
+   color: #174ea6;
+   border-radius: 4px;
+   font-size: 12px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   cursor: pointer;
+}
+
+.evento:hover {
+   background: #c7ddfa;
+}
+
+.evento-horario {
+   font-weight: bold;
+   margin-right: 4px;
+}
+
+/* =========================
+  MODAL
+========================= */
+.modal {
+   display: none;
+   position: fixed;
+   inset: 0;
+   background: rgba(0, 0, 0, 0.4);
+   align-items: center;
+   justify-content: center;
+   z-index: 1000;
+}
+
+.modal.ativo {
+   display: flex;
+}
+
+.modal-conteudo {
+   width: 420px;
+   max-width: 90%;
+   max-height: 90vh;
+   overflow-y: auto;
+   background: white;
+   padding: 25px;
+   border-radius: 12px;
+   box-shadow:
+       0 10px 30px
+       rgba(0, 0, 0, 0.2);
+}
+
+.modal-conteudo h2 {
+   margin-top: 0;
+   margin-bottom: 20px;
+}
+
+.modal-conteudo label {
+   display: block;
+   margin-top: 14px;
+   margin-bottom: 5px;
+   font-weight: bold;
+}
+
+.modal-conteudo input,
+.modal-conteudo textarea {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 6px;
+   font-family: inherit;
+}
+
+.modal-conteudo textarea {
+   min-height: 80px;
+   resize: vertical;
+}
+
+.horarios {
+   display: grid;
+   grid-template-columns:
+       1fr 1fr;
+   gap: 12px;
+}
+
+.modal-botoes {
+   display: flex;
+   justify-content: flex-end;
+   gap: 10px;
+   margin-top: 25px;
+}
+
+.botao-salvar {
+   background: #4285f4;
+   color: white;
+   border: none;
+}
+
+.botao-salvar:hover {
+   background: #3367d6;
+}
+
+/* =========================
+  CELULAR
+========================= */
+@media (max-width: 600px) {
+   .agenda {
+       width: 100%;
+       margin: 0;
+       border-radius: 0;
+   }
+
+   .agenda-cabecalho {
+       flex-wrap: wrap;
+       gap: 12px;
+   }
+
+   #mesAno {
+       order: -1;
+       width: 100%;
+       text-align: center;
+   }
+
+   .dia {
+       min-height: 90px;
+       padding: 5px;
+   }
+
+   .dias-semana span {
+       font-size: 12px;
+   }
+
+   .evento {
+       font-size: 10px;
+   }
+
+   .botao-excluir {
+   background: #fff;
+   color: #d93025;
+   border: 1px solid #d93025;
+}
+
+.botao-excluir:hover {
+   background: #fce8e6;
+}
+}
+
+/* =========================
+  CONFIGURAÇÃO GERAL
+========================= */
+* {
+   box-sizing: border-box;
+}
+
+body {
+   margin: 0;
+   padding: 20px;
+   font-family: Arial, sans-serif;
+   background: #F5F8F4;
+   color: #344B38;
+}
+
+/* =========================
+  ÁREA PRINCIPAL
+========================= */
+.agenda {
+   width: 95%;
+   max-width: 1200px;
+   margin: 30px auto;
+   background: #FFFFFF;
+   border: 1px solid #E4EBE2;
+   border-radius: 18px;
+   overflow: hidden;
+   box-shadow: 0 5px 20px rgba(52, 75, 56, 0.06);
+}
+
+/* =========================
+  CABEÇALHO
+========================= */
+.agenda-cabecalho {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 24px;
+   border-bottom: 1px solid #E8EEE6;
+}
+
+.navegacao {
+   display: flex;
+   gap: 8px;
+}
+
+#mesAno {
+   margin: 0;
+   font-size: 24px;
+   color: #344B38;
+   text-transform: capitalize;
+}
+
+/* =========================
+  BOTÕES
+========================= */
+button {
+   border: 1px solid #DCE6D9;
+   background: #FFFFFF;
+   color: #344B38;
+   border-radius: 10px;
+   padding: 10px 16px;
+   cursor: pointer;
+   font-size: 14px;
+   transition: 0.2s;
+}
+
+button:hover {
+   background: #EDF4EA;
+}
+
+.botao-evento {
+   background: #789477;
+   color: #FFFFFF;
+   border: none;
+   border-radius: 12px;
+   padding: 12px 20px;
+}
+
+.botao-evento:hover {
+   background: #5F7D60;
+}
+
+
+/* =========================
+  DIAS DA SEMANA
+========================= */
+.dias-semana,
+.dias {
+   display: grid;
+   grid-template-columns: repeat(7, 1fr);
+}
+
+.dias-semana span {
+   padding: 16px 8px;
+   text-align: center;
+   font-weight: bold;
+   font-size: 13px;
+   color: #789477;
+   border-bottom: 1px solid #E8EEE6;
+}
+
+/* =========================
+  CARTÕES DOS DIAS
+========================= */
+.dia {
+   min-height: 125px;
+   padding: 10px;
+   border: none;
+   border-right: 1px solid #EDF1EB;
+   border-bottom: 1px solid #EDF1EB;
+   border-radius: 0;
+   background: #FFFFFF;
+   text-align: left;
+   vertical-align: top;
+   transition: background 0.2s;
+}
+
+.dia:hover {
+   background: #F8FBF7;
+}
+
+/* =========================
+  NÚMERO DOS DIAS
+========================= */
+.dia-numero {
+   display: inline-flex;
+   width: 30px;
+   height: 30px;
+   align-items: center;
+   justify-content: center;
+   font-size: 14px;
+   margin-bottom: 8px;
+   border-radius: 50%;
+}
+
+.dia.hoje .dia-numero {
+   background: #789477;
+   color: #FFFFFF;
+}
+
+/* =========================
+  COMPROMISSOS
+========================= */
+.evento {
+   display: block;
+   width: 100%;
+   margin-top: 5px;
+   padding: 6px 8px;
+   background: #E3EFE0;
+   color: #344B38;
+   border-left: 3px solid #789477;
+   border-radius: 7px;
+   font-size: 12px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   cursor: pointer;
+}
+
+.evento:hover {
+   filter: brightness(0.96);
+}
+
+.evento-horario {
+   font-weight: bold;
+   margin-right: 5px;
+}
+
+/* =========================
+  MODAL
+========================= */
+.modal {
+   display: none;
+   position: fixed;
+   inset: 0;
+   background: rgba(30, 45, 32, 0.4);
+   align-items: center;
+   justify-content: center;
+   z-index: 1000;
+}
+
+.modal.ativo {
+   display: flex;
+}
+
+.modal-conteudo {
+   width: 420px;
+   max-width: 90%;
+   max-height: 90vh;
+   overflow-y: auto;
+   background: #FFFFFF;
+   padding: 25px;
+   border-radius: 18px;
+   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+.modal-conteudo h2 {
+   margin-top: 0;
+   margin-bottom: 20px;
+   color: #344B38;
+}
+
+.modal-conteudo label {
+   display: block;
+   margin-top: 14px;
+   margin-bottom: 5px;
+   font-weight: bold;
+   font-size: 14px;
+   color: #526B54;
+}
+
+.modal-conteudo input,
+.modal-conteudo textarea,
+.modal-conteudo select {
+   width: 100%;
+   padding: 11px;
+   border: 1px solid #DCE6D9;
+   border-radius: 9px;
+   font-family: inherit;
+   outline: none;
+   background: white;
+   color: #344B38;
+}
+
+.modal-conteudo input:focus,
+.modal-conteudo textarea:focus {
+   border-color: #789477;
+   box-shadow: 0 0 0 3px rgba(120, 148, 119, 0.12);
+}
+
+.modal-conteudo textarea {
+   min-height: 80px;
+   resize: vertical;
+}
+
+.horarios {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 12px;
+}
+
+.modal-botoes {
+   display: flex;
+   justify-content: flex-end;
+   gap: 10px;
+   margin-top: 25px;
+   flex-wrap: wrap;
+}
+
+.botao-salvar {
+   background: #789477;
+   color: #FFFFFF;
+   border: none;
+}
+
+.botao-salvar:hover {
+   background: #5F7D60;
+}
+
+.botao-excluir {
+   background: #FFFFFF;
+   color: #C34D4D;
+   border: 1px solid #E7BABA;
+}
+
+.botao-excluir:hover {
+   background: #FFF1F1;
+}
+
+/* =========================
+  RESPONSIVIDADE
+========================= */
+@media (max-width: 600px) {
+   body {
+       padding: 8px;
+   }
+
+   .agenda {
+       width: 100%;
+       margin: 10px auto;
+   }
+
+   .agenda-cabecalho {
+       flex-wrap: wrap;
+       gap: 12px;
+       padding: 15px;
+   }
+
+   #mesAno {
+       order: -1;
+       width: 100%;
+       text-align: center;
+   }
+
+   .dia {
+       min-height: 90px;
+       padding: 5px;
+   }
+
+   .dias-semana span {
+       font-size: 11px;
+   }
+
+   .evento {
+       font-size: 10px;
+       padding: 4px;
+   }
+}
+
+/* CORES DOS COMPROMISSOS */
+.evento.azul {
+   background: #3976B8;
+   color: white;
+   border-left-color: #24558A;
+}
+
+.evento.verde {
+   background: #477B4B;
+   color: white;
+   border-left-color: #2D5731;
+}
+
+.evento.rosa {
+   background: #B95668;
+   color: white;
+   border-left-color: #853747;
+}
+
+.evento.amarelo {
+   background: #B68A32;
+   color: white;
+   border-left-color: #806020;
+}
+
+/* Estilo para dias com Contas a Pagar */
+.dia.dia-alerta-pagar {
+    background-color: #ffebee !important;
+    border: 2px solid #e53935 !important;
+}
+
+/* Estilo para dias com Recebimentos / Salário */
+.dia.dia-alerta-receber {
+    background-color: #e8f5e9 !important;
+    border: 2px solid #43a047 !important;
+}
