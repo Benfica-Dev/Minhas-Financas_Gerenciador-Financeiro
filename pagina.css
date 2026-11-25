@@ -133,3 +133,33 @@ input, select {
         display: block !important;
     }
 }
+
+/* Ajustes para telas menores (Celulares) */
+@media screen and (max-width: 768px) {
+    /* Faz o container principal ocupar toda a largura com margens menores */
+    body {
+        padding: 10px;
+    }
+
+    /* Ajusta o cabeçalho para empilhar os elementos em vez de ficarem lado a lado */
+    #tela-resumo > div:first-child {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    /* Reduz o tamanho de fontes muito grandes para não quebrar o layout */
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Organiza os cards de resumo em coluna única no celular */
+    .cards-resumo, .card {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* Ajusta o tamanho do canvas do gráfico para caber na tela do celular */
+    .painel-grafico {
+        max-width: 100% !important;
+    }
+}
