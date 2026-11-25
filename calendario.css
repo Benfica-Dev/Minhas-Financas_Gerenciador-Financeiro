@@ -636,3 +636,78 @@ button:hover {
     background-color: #e8f5e9 !important;
     border: 2px solid #43a047 !important;
 }
+
+/* Ajustes responsivos para o Calendário no Celular */
+@media screen and (max-width: 768px) {
+    .agenda {
+        padding: 5px;
+        margin: 5px;
+    }
+
+    /* Reduz o tamanho dos números dos dias e dos eventos para caberem na tela do celular */
+    .dias .dia {
+        min-height: 60px;
+        padding: 2px;
+    }
+
+    .dia-numero {
+        font-size: 0.8rem;
+    }
+
+    /* Reduz o cabeçalho do calendário (botões de navegar e título do mês) */
+    .agenda-cabecalho {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .agenda-cabecalho h1 {
+        font-size: 1.2rem;
+    }
+
+    /* Faz o modal de cadastro/edição de lembrete ocupar quase a tela toda no celular */
+    .modal-conteudo {
+        width: 95% !important;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 15px;
+    }
+}
+
+@media print {
+    /* Esconde menus, botões e seletores */
+    nav, 
+    .btn-pro, 
+    .btn-calendario, 
+    button, 
+    select, 
+    #tela-login {
+        display: none !important;
+    }
+
+    /* Força o layout a se comportar como página de documento (A4), mesmo vindo de um celular */
+    body, #app-principal, #tela-resumo {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 10px !important;
+        background: white !important;
+        color: black !important;
+        display: block !important;
+    }
+
+    /* Evita que um card ou o gráfico seja cortado no meio entre duas páginas */
+    .cards-resumo, .card, .painel-analise, .painel-grafico {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 15px !important;
+        border: 1px solid #ccc !important;
+    }
+
+    /* Garante que o gráfico caiba inteiro na folha */
+    .painel-grafico canvas {
+        max-width: 280px !important;
+        max-height: 280px !important;
+        margin: 0 auto !important;
+    }
+}
