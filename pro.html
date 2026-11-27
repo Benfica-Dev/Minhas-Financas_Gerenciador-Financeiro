@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página: Quero ser Pro</title>
+    <title>Quero ser Pro</title>
     <link rel="stylesheet" href="pro.css">
 </head>
 <body>
-    
     <div class="pro-container">
         <a href="index.html" class="btn-voltar">Voltar</a>
 
@@ -43,34 +42,10 @@
     <div class="card-preco">
         <span class="preco-valor">R$10,00 <small>/mês</small></span>
         <p>Cancele quando quiser. Sem amarras.</p>
-        <button id="btn-assinar" class="btn-assinar">Quero ser pro Agora</button>
+
+        <a id="btn-assinar" class="btn-assinar" href="https://mpago.la/1HL4X5C">
+            Quero ser Pro agora
+        </a>
     </div>
-
-    <!-- Script para redirecionar para o link de pagamento real -->
-    <script type="module">
-        import { supabase } from './supabase.js';
-
-        const btnAssinar = document.getElementById('btn-assinar');
-        
-        if (btnAssinar) {
-            btnAssinar.addEventListener('click', async () => {
-                // Opcional: Verifica se o usuário está logado para avisar ou salvar o e-mail/ID antes de pagar
-                const { data: { user } } = await supabase.auth.getUser();
-
-                if (!user) {
-                    alert("Por favor, faça login no app antes de assinar o plano Pro!");
-                    window.location.href = "index.html";
-                    return;
-                }
-
-                // -------------------------------------------------------------
-                https://mpago.la/1HL4X5C -------------------------------------------------------------
-                const linkDePagamento = "https://mpago.la/SEU_LINK_AQUI";
-
-                // Redireciona o usuário para a página de checkout seguro
-                window.location.href = linkDePagamento;
-            });
-        }
-    </script>
 </body>
 </html>
