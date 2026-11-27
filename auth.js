@@ -17,20 +17,13 @@ export async function fazerLogin(email, senha) {
 }
 
 // Função para cadastrar novo usuário
-export async function cadastrarUsuario(email, senha) {
-    const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: senha,
-    });
-
-    if (error) {
-        alert("Erro ao cadastrar: " + error.message);
-        return false;
-    }
-
-    alert("Cadastro realizado! Verifique seu e-mail (se necessário) ou faça o login.");
-    return true;
-}
+const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: senha,
+    options: {
+        emailRedirectTo: "https://benfica-dev.github.io/Minhas-Financas_Gerenciador-Financeiro/",
+    },
+});
 
 // Função para verificar se há usuário logado ao abrir a página
 export async function verificarSessao(aoLogarCallback) {
