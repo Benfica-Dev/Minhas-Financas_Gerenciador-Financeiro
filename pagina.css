@@ -1,3 +1,139 @@
+/* Regra OBRIGATÓRIA para esconder as telas inativas */
+.escondido {
+    display: none !important;
+}
+
+/* Espaçamento e estilo básico */
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 16px;
+}
+
+.btn-calendario {
+    display: inline-block;
+    margin: 10px 0 20px 0; /* Margem em cima e embaixo para desgrudar das bordas */
+    background-color: #3498db;
+    color: white;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.btn-calendario:hover {
+    background-color: #1f5375;
+    transform: translateY(-1px);
+}
+
+h1{
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+nav button {
+    padding: 12px 20px;
+    margin-right: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+nav button:hover{
+    background-color: #2980b9;
+}
+
+.tela-do-app {
+   margin-top: 20px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.linha-gastom {
+    margin-bottom: 15px;
+}
+
+input, select {
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+/* Painel do Gráfico (com o erro de espaço corrigido) */
+.painel-grafico {
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+    margin: 20px auto; /* Erro do espaço entre 20 e px corrigido aqui */
+}
+
+/* Cards de Resumo */
+.card, .cards-resumo {
+    background: #fdfdfd;
+    border: 1px solid #e1e1e1;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+}
+
+.card.destaque {
+    background-color: #e8f8f5;
+    border-color: #27ae60;
+}
+
+.btn-pro{
+    display: inline-block;
+    margin: 10px 0 20px 0; /* Margem em cima e embaixo para desgrudar das bordas */
+    background-color: #ffc117;
+    color: white;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+/* Configurações exclusivas para quando o usuário mandar imprimir */
+@media print {
+    /* Esconde o menu de navegação, botões e elementos indesejados */
+    nav, 
+    .btn-pro, 
+    .btn-calendario, 
+    button, 
+    select, 
+    #tela-login {
+        display: none !important;
+    }
+
+    /* Deixa o fundo limpo e o conteúdo ocupando a página toda */
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    /* Garante que o painel principal de resumo apareça limpo */
+    #app-principal {
+        display: block !important;
+    }
+}
+
 .btn-sair {
     display: inline-flex;
     align-items: center;
