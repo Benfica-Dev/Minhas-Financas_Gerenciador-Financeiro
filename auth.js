@@ -1,197 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhas Finanças</title>
+import { supabase } from './supabase.js';
 
-    <link rel="stylesheet" href="pagina.css">
+export async function fazerLogin(email, senha) {
+    const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password: senha,
+    });
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="module" src="resumo.js"></script>
-    <script type="module" src="pagina.js" defer></script>
-</head>
-<body>
-    <div id="tela-login" class="tela-do-app">
-        <div class="card-login" style="max-width: 400px; margin: 100px auto; padding: 20px; text-align: center;">
-            <h2>Login do APP</h2>
+    if (error) {
+        alert("Erro ao entrar: " + error.message);
+        return false;
+    }
 
-            <form id="form-login">
-                <div style="margin-bottom: 15px;">
-                    <input type="email" id="email-login" placeholder="Seu email" required style="width: 100%; padding: 10px;">
-                </div>
+    alert("Login realizado com sucesso!");
+    return true;
+}
 
-                <div style="margin-bottom: 15px;">
-                    <input type="password" id="senha-login" placeholder="Sua senha" required style="width: 100%; padding: 10px;">
-                </div>
+export async function cadastrarUsuario(email, senha) {
+    const { error } = await supabase.auth.signUp({
+        email,
+        password: senha,
+        options: {
+            emailRedirectTo: "https://benfica-dev.github.io/Minhas-Financas_Gerenciador-Financeiro/",
+        },
+    });
 
-                <button type="submit" id="btn-entrar" style="width: 100%; padding: 10px; background: #36a2eb; color: white; border: none; cursor: pointer;">
-                    Entrar
-                </button>
+    if (error) {
+        alert("Erro ao cadastrar: " + error.message);
+        return false;
+    }
 
-                <p style="margin-top: 15px;">
-                    Não tem uma conta?
-                    <button type="button" id="btn-cadastrar" style="background: none; border: none; color: #36a2eb; cursor: pointer; text-decoration: underline;">
-                        Cadastre-se
-                    </button>
-                </p>
-            </form>
-        </div>
-    </div>
+    alert("Cadastro realizado! Verifique seu e-mail (se necessário) ou faça o login.");
+    return true;
+}
 
-    <div id="app-principal" class="tela-do-app escondido">
-        <h1>Página de Financiamento</h1>
+export async function verificarSessao(aoLogarCallback) {
+    const { data: { session } } = await supabase.auth.getSession();
 
-        <a href="calendario.html" class="btn-calendario">Ir para o calendário</a>
-        <a href="pro.html" class="btn-pro">Virar pro</a>
-        <button type="button" id="btn-sair">Sair da conta</button>
+    if (session) {
+        aoLogarCallback(session.user);
+    } else {
+        document.getElementById('tela-login')?.classList.remove('escondido');
+    }
+}
 
-        <nav>
-            <button onclick="mudarDeAba('tela-resumo')">Resumo</button>
-            <button onclick="mudarDeAba('tela-gastosm')">Gastos Fixos</button>
-            <button onclick="mudarDeAba('tela-gastosd')">Gastos Diários</button>
-            <button onclick="mudarDeAba('tela-controlem')">Controle de Metas</button>
-        </nav>
+export async function fazerLogout() {
+    const { error } = await supabase.auth.signOut();
 
-        <main class="conteudo-principal">
-            <section id="tela-resumo" class="tela-do-app">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-                    <h2>Resumo do Mês</h2>
+    if (error) {
+        alert("Erro ao sair: " + error.message);
+        return;
+    }
 
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <button id="btn-imprimir" class="recurso-pro escondido" onclick="gerarRelatorioImpressao()" style="background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                            Imprimir Relatório
-                        </button>
-
-                        <select id="tipo-grafico" onchange="window.mudarDeAba('tela-resumo')" style="padding: 6px 10px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer;">
-                            <option value="doughnut">Rosca</option>
-                            <option value="pie">Pizza</option>
-                            <option value="bar">Colunas</option>
-                            <option value="line">Linha</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="campo-salario">
-                    <label for="salario">Salário:</label>
-                    <input type="number" id="salario" placeholder="Digite seu salário">
-                </div>
-
-                <div class="cards-resumo">
-                    <h3>Gastos Fixos</h3>
-                    <p id="total-fixos">R$ 0,00</p>
-                </div>
-
-                <div class="card">
-                    <h3>Orçamento Disponivel</h3>
-                    <p id="dinheiro-livre">R$0,00</p>
-                </div>
-
-                <div class="card">
-                    <h3>Gastos Diários(mês)</h3>
-                    <p id="total-diarios">R$0,00</p>
-                </div>
-
-                <div class="card destaque">
-                    <h3>Saldo Final</h3>
-                    <p id="saldo-final">R$0,00</p>
-                </div>
-
-                <div class="painel-analise">
-                    <h3>Maior Categoria de Gasto:</h3>
-                    <p id="maior-categoria">Nenhum gasto registrado ainda!</p>
-                </div>
-
-                <div class="painel-grafico" style="max-width: 300px; margin: 20px auto;">
-                    <canvas id="grafico-resumo"></canvas>
-                </div>
-            </section>
-
-            <section id="tela-gastosm" class="tela-do-app escondido">
-                <h2>Gastos Fixos</h2>
-                <p class="subtitulo">Escreva aqui seus gastos fixos!</p>
-
-                <form id="form-gastos-fixos">
-                    <div class="linha-gastom">
-                        <label for="gasto-luz">Energia/Luz:</label>
-                        <input type="number" id="gasto-luz" placeholder="R$0,00" min="0" step="0.01">
-                    </div>
-
-                    <div class="linha-gastom">
-                        <label for="gasto-agua">Água:</label>
-                        <input type="number" id="gasto-agua" placeholder="R$0,00" min="0" step="0.01">
-                    </div>
-
-                    <div class="linha-gastom">
-                        <label for="gasto-internet">Internet:</label>
-                        <input type="number" id="gasto-internet" placeholder="R$0,00" min="0" step="0.01">
-                    </div>
-
-                    <div class="linha-gastom">
-                        <label for="gasto-mercado">Mercado:</label>
-                        <input type="number" id="gasto-mercado" placeholder="R$0,00" min="0" step="0.01">
-                    </div>
-
-                    <button type="submit" class="btn-salvar">Salvar gastos fixos</button>
-                </form>
-            </section>
-
-            <section id="tela-gastosd" class="tela-do-app escondido">
-                <h2>Gastos Diários</h2>
-                <p class="subtitulo">Escreva aqui seus gastos diários!</p>
-
-                <form id="category-form">
-                    <label for="new-category">Nova Categoria</label>
-                    <input type="text" id="new-category" placeholder="Ex: Lanches, Uber, Mercado..." required>
-                    <button class="btn btn-add" type="submit" id="add-category">Criar Categoria</button>
-                </form>
-
-                <hr>
-
-                <form id="gasto-form">
-                    <label for="gasto-nome">Descrição do Gasto</label>
-                    <input type="text" id="gasto-nome" placeholder="Ex: Coxinha + Refri" required>
-
-                    <label for="gasto-valor">Valor (R$)</label>
-                    <input type="number" id="gasto-valor" placeholder="0.00" step="0.01" min="0" required>
-
-                    <label for="gasto-type">Categoria</label>
-                    <select name="gasto-type" id="gasto-type" required>
-                        <option value="" disabled selected>-- Selecione uma categoria --</option>
-                    </select>
-
-                    <button class="btn btn-add" type="submit" id="add-gasto">Adicionar Gasto</button>
-                </form>
-            </section>
-
-            <section id="tela-controlem" class="tela-do-app escondido">
-                <h2>Controle de Metas</h2>
-                <p class="subtitulo">Defina suas metas aqui!!</p>
-
-                <form id="form-meta">
-                    <label for="meta-nome">Nome da Meta:</label>
-                    <input type="text" id="meta-nome" placeholder="Ex: Viagem, Notebook..." required>
-
-                    <label for="meta-objetivo">Valor Objetivo (R$):</label>
-                    <input type="number" id="meta-objetivo" placeholder="0,00" step="0.01" min="0.01" required>
-
-                    <button type="submit" class="btn-salvar">Criar Meta</button>
-                </form>
-
-                <hr>
-
-                <div id="lista-metas" class="container-metas">
-                    <!-- Onde as metas vão aparecer -->
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <script type="module">
-        import { fazerLogout } from './auth.js';
-
-        const botaoSair = document.getElementById('btn-sair');
-        botaoSair.addEventListener('click', fazerLogout);
-    </script>
-</body>
-</html>
+    window.location.reload();
+}
